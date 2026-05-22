@@ -67,6 +67,10 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
 
         </div>
 
+        <div class="justify-content-center d-flex align-content-center mb-5">
+            <input class="col-8 border-0 rounded-2 px-2 shadow-lg" type="text" id="wyszukiwarka" placeholder="Wyszukaj produkty">
+        </div>
+
         <!-- PRODUKTY -->
         <div class="row justify-content-center g-4" id="produktyS">
 
@@ -141,6 +145,8 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
         const Przekaski = document.getElementById('Przekaski');
         const Napoje = document.getElementById('Napoje');
         const produktyS = document.getElementById('produktyS');
+        const Wyszukiwarka = document.getElementById('wyszukiwarka');
+
 
         Wszystko.addEventListener('click',()=>{
             fetch('wyswietl.php', {
@@ -167,6 +173,21 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
         UsunKlasy();
         Jedzenie.classList.add('active');
         });
+
+        Wyszukiwarka.addEventListener('input',()=>{
+            UsunKlasy();
+            Wszystko.classList.add('active');
+            const szukanie = Wyszukiwarka.value;
+            fetch('wyswietl.php',{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `szukanie=${encodeURIComponent(szukanie)}`
+            }).then(res => res.text())
+            .then(data => {
+                document.getElementById('produktyS').innerHTML = data;
+            });
+        })
+
 
         Przekaski.addEventListener('click',()=>{
             fetch('wyswietl.php', {

@@ -2,12 +2,13 @@
 
     $db = mysqli_connect('localhost','root','','zegowskaszama');
 
-    $kategoria = $_POST['kategoria'];
+    $kategoria = $_POST['kategoria'] ?? 'Wszystko';
+    $szukanie = $_POST['szukanie'] ?? '';
 
     if($kategoria!="Wszystko"){
-    $sql = "SELECT produkty.id, produkty.Nazwa, produkty.Cena, produkty.Kategoria, produkty.opis FROM produkty WHERE produkty.Kategoria = '$kategoria' ORDER BY produkty.Nazwa ASC";
+    $sql = "SELECT produkty.id, produkty.Nazwa, produkty.Cena, produkty.Kategoria, produkty.opis FROM produkty WHERE produkty.Kategoria = '$kategoria' AND produkty.Nazwa LIKE '%$szukanie%' ORDER BY produkty.Nazwa ASC";
     }else{
-    $sql = "SELECT produkty.id, produkty.Nazwa, produkty.Cena, produkty.Kategoria, produkty.opis FROM produkty ORDER BY produkty.Nazwa ASC";
+    $sql = "SELECT produkty.id, produkty.Nazwa, produkty.Cena, produkty.Kategoria, produkty.opis FROM produkty WHERE produkty.Nazwa LIKE '%$szukanie%' ORDER BY produkty.Nazwa ASC";
     }
 
 
