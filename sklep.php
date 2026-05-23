@@ -13,8 +13,34 @@
     <link rel="stylesheet" href="styl_sklep.css">
 </head>
 <?php
+session_start();
 
-$db = mysqli_connect('localhost','root','','zegowskaszama');
+if(!isset($_SESSION['user_id'])){
+    header("location: logowanie.php");
+
+    exit;
+}
+
+$status = $_SESSION['user_id'];
+$db = mysqli_connect('localhost', 'root', '', 'zegowskaszama');
+
+if (!$db) {
+    die("Błąd połączenia z bazą: " . mysqli_connect_error());
+}
+mysqli_set_charset($db, "utf8mb4");
+
+// Pobieramy dane użytkownika z bazy, jeśli to nie jest admin
+$imie_uzytkownika = "Użytkownik";
+if ($status !== 'admin') {
+    $sql1 = "SELECT Imie, Email FROM uzytkownicy WHERE id = '" . mysqli_real_escape_string($db, $status) . "'";
+    $wynik = mysqli_query($db, $sql1);
+    if ($wynik && mysqli_num_rows($wynik) == 1) {
+        $uzytkownik = mysqli_fetch_assoc($wynik);
+        $imie_uzytkownika = $uzytkownik['Imie'];
+    }
+} else {
+    $imie_uzytkownika = "Admin";
+}
 ?>
 
 <!-- fajne tlo -->
@@ -28,9 +54,9 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
                 <img src="logo.png" alt="logo" class="logo">
             </div>
 
-            <select class="form-select w-auto rounded-4">
-                <option>Uczeń</option>
-            </select>
+            <button class="w-auto rounded-4 bg-light fw-bold border-0 shadow-sm px-3 py-2 btn btn-sm">
+                    <a href="konto.php"><?php echo htmlspecialchars($imie_uzytkownika); ?></a>
+                </button>
 
         </div>
 
@@ -65,10 +91,6 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
                 🍫 Przekąski
             </button>
 
-        </div>
-
-        <div class="justify-content-center d-flex align-content-center mb-5">
-            <input class="col-8 border-0 rounded-2 px-2 shadow-lg" type="text" id="wyszukiwarka" placeholder="Wyszukaj produkty">
         </div>
 
         <!-- PRODUKTY -->
@@ -145,8 +167,6 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
         const Przekaski = document.getElementById('Przekaski');
         const Napoje = document.getElementById('Napoje');
         const produktyS = document.getElementById('produktyS');
-        const Wyszukiwarka = document.getElementById('wyszukiwarka');
-
 
         Wszystko.addEventListener('click',()=>{
             fetch('wyswietl.php', {
@@ -173,21 +193,6 @@ $db = mysqli_connect('localhost','root','','zegowskaszama');
         UsunKlasy();
         Jedzenie.classList.add('active');
         });
-
-        Wyszukiwarka.addEventListener('input',()=>{
-            UsunKlasy();
-            Wszystko.classList.add('active');
-            const szukanie = Wyszukiwarka.value;
-            fetch('wyswietl.php',{
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `szukanie=${encodeURIComponent(szukanie)}`
-            }).then(res => res.text())
-            .then(data => {
-                document.getElementById('produktyS').innerHTML = data;
-            });
-        })
-
 
         Przekaski.addEventListener('click',()=>{
             fetch('wyswietl.php', {
