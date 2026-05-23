@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 21, 2026 at 09:59 PM
+-- Generation Time: May 23, 2026 at 08:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -117,9 +117,16 @@ CREATE TABLE `użytkownicy` (
   `id` int(10) UNSIGNED NOT NULL,
   `Imie` varchar(35) NOT NULL,
   `Nazwisko` varchar(35) NOT NULL,
-  `Login` varchar(35) NOT NULL,
-  `Hasło` varchar(20) NOT NULL
+  `Email` varchar(35) NOT NULL,
+  `Haslo` varchar(67) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `użytkownicy`
+--
+
+INSERT INTO `użytkownicy` (`id`, `Imie`, `Nazwisko`, `Email`, `Haslo`) VALUES
+(1, 'Kamien', 'Urwal', 'kamy@gmail.com', '$2y$10$TG7NUX8lC2zp5ZLRMgyETOlnToln3gVnhGddyLKevV7p7IygbV76O');
 
 -- --------------------------------------------------------
 
@@ -165,7 +172,7 @@ ALTER TABLE `produkty`
 --
 ALTER TABLE `użytkownicy`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `Hasło` (`Hasło`),
+  ADD UNIQUE KEY `Hasło` (`Haslo`(25)),
   ADD KEY `id` (`id`);
 
 --
@@ -202,7 +209,7 @@ ALTER TABLE `produkty`
 -- AUTO_INCREMENT for table `użytkownicy`
 --
 ALTER TABLE `użytkownicy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `zamówienia`
