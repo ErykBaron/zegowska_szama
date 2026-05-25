@@ -30,7 +30,7 @@ mysqli_set_charset($db, "utf8mb4");
 // Pobieramy dane użytkownika z bazy, jeśli to nie jest admin
 $imie_uzytkownika = "Użytkownik";
 if ($status !== 'admin') {
-    $sql1 = "SELECT Imie, Email FROM uzytkownicy WHERE id = '" . mysqli_real_escape_string($db, $status) . "'";
+    $sql1 = "SELECT Imie, Email FROM użytkownicy WHERE id = '" . mysqli_real_escape_string($db, $status) . "'";
     $wynik = mysqli_query($db, $sql1);
     if ($wynik && mysqli_num_rows($wynik) == 1) {
         $uzytkownik = mysqli_fetch_assoc($wynik);
@@ -61,9 +61,16 @@ if ($status !== 'admin') {
     <!-- main - zawiera cala oferte i mozliwosc dodawania produktow do koszyka -->
     <main class="container py-5">
         <div class="shop-wrapper mx-auto">
+            <!-- BUTTON -->
+            <div class="text-center my-5">
+                <button class="btn summary-btn shadow-sm" id="koszyk">
+                    Podsumowanie Koszyka
+                </button>
+            </div>
 
             <!-- TYTUŁ -->
             <h1 class="text-center fw-bold mb-5">Nasza Oferta</h1>
+            
 
             <!-- Kategorie -->
             <div class="d-flex justify-content-center gap-3 flex-wrap mb-5">
@@ -103,7 +110,7 @@ if ($status !== 'admin') {
                             <p class="text-secondary flex-grow-1">' . $d['opis'] . '</p>
 
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fs-3 fw-bold">' . $d['Cena'] . ' zł</span>
+                                <span class="fs-3 fw-bold">' . number_format($d['Cena'], 2, ',', '') . ' zł</span>
                                 <a href="dodajDoKoszyka.php?id=' . (int)$d['id'] . '" class="btn add-btn p-0 d-flex justify-content-center align-items-center text-white text-decoration-none" style="width: 40px; height: 40px; font-size: 24px; line-height: 1; border-radius: 50%;">+</a>
                             </div>
                         </div>
@@ -113,12 +120,7 @@ if ($status !== 'admin') {
                 ?>
             </div>
 
-            <!-- BUTTON -->
-            <div class="text-center mt-5">
-                <button class="btn summary-btn shadow-sm" id="koszyk">
-                    Podsumowanie Koszyka
-                </button>
-            </div>
+            
         </div>
 
         <script>
