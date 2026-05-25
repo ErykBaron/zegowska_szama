@@ -132,7 +132,27 @@ if ($status !== 'admin') {
                     </div>';
                 }
                 ?>
-            </div> </div>
-    </main>
+            </div> 
+        </div> </main>
+
+    <script>
+        const zamowienie = document.getElementById('zamowienie');
+
+            zamowienie.addEventListener('click', () => {
+                if(confirm("Czy na pewno chcesz dokonać zakupu?")){
+                    fetch('zamowienie.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    })
+                    .then(res => {
+                        alert('Zakup wykonano pomyślnie');
+                        window.location.href = 'koszyk.php';
+                    })
+                    .catch(err => {
+                        console.error('Błąd podczas składania zamówienia:', err);
+                    });
+                }
+            });
+    </script>
 </body>
 </html>

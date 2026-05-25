@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 23, 2026 at 08:12 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Host: 127.0.0.1
+-- Czas generowania: 25 Maj 2026, 15:01
+-- Wersja serwera: 10.4.27-MariaDB
+-- Wersja PHP: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `zegowskaszama`
+-- Baza danych: `zegowskaszama`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktura tabeli dla tabeli `admin`
 --
 
 CREATE TABLE `admin` (
@@ -38,7 +38,7 @@ CREATE TABLE `admin` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `koszyk`
+-- Struktura tabeli dla tabeli `koszyk`
 --
 
 CREATE TABLE `koszyk` (
@@ -47,10 +47,19 @@ CREATE TABLE `koszyk` (
   `id_uzytkownika` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Zrzut danych tabeli `koszyk`
+--
+
+INSERT INTO `koszyk` (`id`, `id_produktu`, `id_uzytkownika`) VALUES
+(3, 15, 1),
+(2, 23, 1),
+(4, 39, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produkty`
+-- Struktura tabeli dla tabeli `produkty`
 --
 
 CREATE TABLE `produkty` (
@@ -62,7 +71,7 @@ CREATE TABLE `produkty` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `produkty`
+-- Zrzut danych tabeli `produkty`
 --
 
 INSERT INTO `produkty` (`id`, `Nazwa`, `Cena`, `Kategoria`, `opis`) VALUES
@@ -110,7 +119,7 @@ INSERT INTO `produkty` (`id`, `Nazwa`, `Cena`, `Kategoria`, `opis`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `użytkownicy`
+-- Struktura tabeli dla tabeli `użytkownicy`
 --
 
 CREATE TABLE `użytkownicy` (
@@ -122,7 +131,7 @@ CREATE TABLE `użytkownicy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `użytkownicy`
+-- Zrzut danych tabeli `użytkownicy`
 --
 
 INSERT INTO `użytkownicy` (`id`, `Imie`, `Nazwisko`, `Email`, `Haslo`) VALUES
@@ -131,29 +140,37 @@ INSERT INTO `użytkownicy` (`id`, `Imie`, `Nazwisko`, `Email`, `Haslo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `zamówienia`
+-- Struktura tabeli dla tabeli `zamówienia`
 --
 
 CREATE TABLE `zamówienia` (
   `id` int(11) NOT NULL,
   `id_użytkownika` int(11) UNSIGNED NOT NULL,
   `id_produktu` int(11) NOT NULL,
+  `data` date NOT NULL,
   `indeks` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Zrzut danych tabeli `zamówienia`
+--
+
+INSERT INTO `zamówienia` (`id`, `id_użytkownika`, `id_produktu`, `data`, `indeks`) VALUES
+(1, 1, 2, '2026-05-25', 0);
+
+--
+-- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `admin`
+-- Indeksy dla tabeli `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Hasło` (`Hasło`);
 
 --
--- Indexes for table `koszyk`
+-- Indeksy dla tabeli `koszyk`
 --
 ALTER TABLE `koszyk`
   ADD PRIMARY KEY (`id`),
@@ -161,14 +178,14 @@ ALTER TABLE `koszyk`
   ADD KEY `id_uzytkownika` (`id_uzytkownika`);
 
 --
--- Indexes for table `produkty`
+-- Indeksy dla tabeli `produkty`
 --
 ALTER TABLE `produkty`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `użytkownicy`
+-- Indeksy dla tabeli `użytkownicy`
 --
 ALTER TABLE `użytkownicy`
   ADD PRIMARY KEY (`id`),
@@ -176,7 +193,7 @@ ALTER TABLE `użytkownicy`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `zamówienia`
+-- Indeksy dla tabeli `zamówienia`
 --
 ALTER TABLE `zamówienia`
   ADD PRIMARY KEY (`id`),
@@ -184,52 +201,52 @@ ALTER TABLE `zamówienia`
   ADD KEY `id_produktu` (`id_produktu`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT dla tabeli `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `koszyk`
+-- AUTO_INCREMENT dla tabeli `koszyk`
 --
 ALTER TABLE `koszyk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `produkty`
+-- AUTO_INCREMENT dla tabeli `produkty`
 --
 ALTER TABLE `produkty`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT for table `użytkownicy`
+-- AUTO_INCREMENT dla tabeli `użytkownicy`
 --
 ALTER TABLE `użytkownicy`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `zamówienia`
+-- AUTO_INCREMENT dla tabeli `zamówienia`
 --
 ALTER TABLE `zamówienia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Constraints for table `koszyk`
+-- Ograniczenia dla tabeli `koszyk`
 --
 ALTER TABLE `koszyk`
   ADD CONSTRAINT `koszyk_ibfk_1` FOREIGN KEY (`id_produktu`) REFERENCES `produkty` (`id`),
   ADD CONSTRAINT `koszyk_ibfk_2` FOREIGN KEY (`id_uzytkownika`) REFERENCES `użytkownicy` (`id`);
 
 --
--- Constraints for table `zamówienia`
+-- Ograniczenia dla tabeli `zamówienia`
 --
 ALTER TABLE `zamówienia`
   ADD CONSTRAINT `zamówienia_ibfk_1` FOREIGN KEY (`id_produktu`) REFERENCES `produkty` (`id`),
