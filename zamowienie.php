@@ -24,10 +24,7 @@ $wynik1 = mysqli_query($db, $sql1);
     while($d = mysqli_fetch_array($wynik1)){
         $id_prod = $d['id_produktu'];
         
-        $sql = "INSERT INTO zamówienia (id, id_uzytkownika, id_produktu, data, indeks) 
-                VALUES (NULL, 
-                        '" . mysqli_real_escape_string($db, $status) . "', 
-                        '" . mysqli_real_escape_string($db, $id_prod) . "', 
+        $sql = "INSERT INTO zamówienia VALUES (NULL, '" . mysqli_real_escape_string($db, $status) . "', '" . mysqli_real_escape_string($db, $id_prod) . "', 
                         '$data', 
                         '$indeks')";
                         

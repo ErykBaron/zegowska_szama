@@ -24,7 +24,7 @@ mysqli_set_charset($db, "utf8mb4");
 // Pobieramy dane użytkownika z bazy, jeśli to nie jest admin
 $imie_uzytkownika = "Użytkownik";
 if ($status !== 'admin') {
-    $sql = "SELECT Imie, Email FROM uzytkownicy WHERE id = '" . mysqli_real_escape_string($db, $status) . "'";
+    $sql = "SELECT Imie, Email FROM użytkownicy WHERE id = '" . mysqli_real_escape_string($db, $status) . "'";
     $wynik = mysqli_query($db, $sql);
     if ($wynik && mysqli_num_rows($wynik) == 1) {
         $uzytkownik = mysqli_fetch_assoc($wynik);

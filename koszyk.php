@@ -138,6 +138,7 @@ if ($status !== 'admin') {
     <script>
         const zamowienie = document.getElementById('zamowienie');
 
+        if(zamowienie){
             zamowienie.addEventListener('click', () => {
                 if(confirm("Czy na pewno chcesz dokonać zakupu?")){
                     fetch('zamowienie.php', {
@@ -153,6 +154,7 @@ if ($status !== 'admin') {
                     });
                 }
             });
+        }
     </script>
 </body>
 </html>
