@@ -80,6 +80,11 @@ if ($status !== 'admin') {
                 <button class="btn category-btn" id="Przekaski">🍫 Przekąski</button>
             </div>
 
+            <div class="justify-content-center d-flex align-content-center mb-5">
+            <input class="col-8 border-0 rounded-2 px-2 shadow-lg" type="text" id="wyszukiwarka" placeholder="Wyszukaj produkty">
+            </div>
+
+
             <!-- PRODUKTY -->
             <div class="row justify-content-center g-4" id="produktyS">
                 <?php
@@ -129,11 +134,26 @@ if ($status !== 'admin') {
             const Przekaski = document.getElementById('Przekaski');
             const Napoje = document.getElementById('Napoje');
             const produktyS = document.getElementById('produktyS');
+            const Wyszukiwarka = document.getElementById('wyszukiwarka');
 
             // Podpięcie przekierowania dla guzika koszyka na dole strony
             document.getElementById('koszyk').addEventListener('click', () => {
                 window.location.href = 'koszyk.php'; // Lub inna nazwa Twojego pliku z koszykiem
             });
+
+             Wyszukiwarka.addEventListener('input',()=>{
+            UsunKlasy();
+            Wszystko.classList.add('active');
+            const szukanie = Wyszukiwarka.value;
+            fetch('wyswietl.php',{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `szukanie=${encodeURIComponent(szukanie)}`
+            }).then(res => res.text())
+            .then(data => {
+                document.getElementById('produktyS').innerHTML = data;
+            });
+        })
 
             Wszystko.addEventListener('click',()=>{
                 fetch('wyswietl.php', {
