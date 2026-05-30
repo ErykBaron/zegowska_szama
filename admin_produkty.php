@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 // TYLKO ADMIN MA TU WSTĘP
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] !== 'admin') {
-    header("Location: konto.php");
+    header("Location: sklep.php");
     exit;
 }
 
@@ -149,7 +149,7 @@ $wynik_produkty = mysqli_query($db, $sql_produkty);
                 <a href="sklep.php" class="text-decoration-none mb-3">
                     <button class="btn menu-btn w-100 text-start">🛒 Powrót do sklepu</button>
                 </a>
-                <a href="panel_admina.php" class="text-decoration-none">
+                <a href="panelAdmina.php" class="text-decoration-none">
                     <button class="btn menu-btn text-start w-100 active">⬅ Panel Główny Admina</button>
                 </a>
                 <button class="btn menu-btn text-start text-danger w-100 mt-2 mobile-logout-btn">↪ Wyloguj się</button>
@@ -168,7 +168,7 @@ $wynik_produkty = mysqli_query($db, $sql_produkty);
                     <a href="sklep.php" class="text-decoration-none">
                         <button class="btn menu-btn w-100 text-start">🛒 Powrót do sklepu</button>
                     </a>
-                    <a href="panel_admina.php" class="text-decoration-none">
+                    <a href="panelAdmina.php" class="text-decoration-none">
                         <button class="btn menu-btn w-100 text-start active">⬅ Panel Główny Admina</button>
                     </a>
                 </div>
