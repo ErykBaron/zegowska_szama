@@ -27,8 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['zarejestruj'])) {
     } else {
         $sql_check = "SELECT id FROM użytkownicy WHERE email = '$email'";
         $result_check = mysqli_query($db, $sql_check);
+        $sql_check1 = "SELECT id FROM `admin` WHERE email = '$email'";
+        $result_check1 = mysqli_query($db, $sql_check1);
 
-        if (mysqli_num_rows($result_check) > 0) {
+        if (mysqli_num_rows($result_check) > 0 || mysqli_num_rows($result_check1) > 0) {
             $komunikat = "Ten adres e-mail jest już zajęty!";
             $klasa_komunikatu = "alert-danger";
         } else {

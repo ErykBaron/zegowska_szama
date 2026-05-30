@@ -20,24 +20,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['zaloguj'])) {
     } else {
         $sql = "SELECT * FROM użytkownicy WHERE Email = '$email'";
         $result = mysqli_query($db, $sql);
+        $sql1 = "SELECT * FROM `admin` WHERE Email = '$email'";
+        $result1 = mysqli_query($db, $sql1);
 
-        if (mysqli_num_rows($result) == 1) {
-            $user = mysqli_fetch_assoc($result);
-            
-            if (password_verify($haslo, $user['Haslo'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_imie'] = $user['Imie'];
+        if(mysqli_num_rows($result1) == 1){
+            $admin = mysqli_fetch_assoc($result1);
+
+            if($haslo == $admin['Hasło']){
+                $_SESSION['user_id'] = 'admin';
 
                 $komunikat = "Zalogowano pomyślnie!";
                 $klasa_komunikatu = "alert-success";
-                header("refresh:1; url=sklep.php");
+                header("refresh:1; url=panelAdmina.php");
+            }
+        }else{
+            if (mysqli_num_rows($result) == 1) {
+                $user = mysqli_fetch_assoc($result);
+                
+                if (password_verify($haslo, $user['Haslo'])) {
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_imie'] = $user['Imie'];
+
+                    $komunikat = "Zalogowano pomyślnie!";
+                    $klasa_komunikatu = "alert-success";
+                    header("refresh:1; url=sklep.php");
+                } else {
+                    $komunikat = "Nieprawidłowe hasło!";
+                    $klasa_komunikatu = "alert-danger";
+                }
             } else {
-                $komunikat = "Nieprawidłowe hasło!";
+                $komunikat = "Nie znaleziono użytkownika o podanym adresie e-mail!";
                 $klasa_komunikatu = "alert-danger";
             }
-        } else {
-            $komunikat = "Nie znaleziono użytkownika o podanym adresie e-mail!";
-            $klasa_komunikatu = "alert-danger";
         }
     }
     mysqli_close($db);
