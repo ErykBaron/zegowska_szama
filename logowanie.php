@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['zaloguj'])) {
                 </input>
 
                 <div class="small">
-                    Nie masz konta? <a href="rejestracja.html"  class="text-success text-decoration-none fw-bold">Zarejestruj się</a>
+                    Nie masz konta? <a href="rejestracja.php"  class="text-success text-decoration-none fw-bold">Zarejestruj się</a>
                 </div>
             </form>
             

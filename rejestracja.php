@@ -101,8 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['zarejestruj'])) {
                 <button type="submit" name="zarejestruj" class="btn btn-success btn-lg w-100 mb-3" style="background-color: #8db63f; border: none;">
                     Zarejestruj się
                 </button>
-                <div class="text-end mt-1">
-                    <a href="logowanie.php" class="text-decoration-none text-muted small">Masz już konto? <br> Zaloguj się</a>
+                <div class="small">
+                    Masz już konto? <a href="logowanie.php"  class="text-success text-decoration-none fw-bold">Zaloguj się</a>
                 </div>
             </form>
             
